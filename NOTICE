@@ -1,45 +1,22 @@
-TacUNS Personal Firewall
-Copyright 2026 Tacuns
+Security APP by AI-Tech-DB
+Copyright (C) 2026 AI-Tech-DB
 
-This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+This project is licensed under the GNU General Public License v3.0 (GPLv3).
+See the LICENSE file for the full text.
 
-The TacUNS name and logo are not licensed under the Apache License (section 6).
+--- ATTRIBUTION AND ORIGINS ---
 
--------------------------------------------------------------------------------
-Third-party material included in this repository
--------------------------------------------------------------------------------
+1. Core Firewall Engine (Original Base):
+This project is based on the original "TacUNS" project, which was licensed under the Apache License, Version 2.0.
+Original TacUNS code: https://github.com/Tacuns/personalfirewallTacuns
+The Apache 2.0 licensed code has been modified and integrated into this GPLv3 project. 
 
-app/src/main/assets/country.mmdb
-  "server-country" IP-to-country database from ip-location-db
-  https://github.com/sapics/ip-location-db
-  Licence: Open Data Commons Public Domain Dedication and License (PDDL) v1.0
-  https://opendatacommons.org/licenses/pddl/1-0/
+2. UI, Native Bridge, and Integration (AI-Tech-DB):
+The Flutter-based user interface (Welcome Screen, Setup, Dashboard, Log, Settings, and related widgets), 
+the native Android bridge (MainActivity.kt, MethodChannels, EventChannels), 
+and all the integration logic between the Flutter module and the Kotlin core 
+were designed and written from scratch by AI-Tech-DB.
 
-gradle/wrapper/gradle-wrapper.jar
-  Gradle Wrapper, https://gradle.org
-  Licence: Apache License, Version 2.0
-
--------------------------------------------------------------------------------
-Libraries downloaded at build time (not stored in this repository)
--------------------------------------------------------------------------------
-
-All are licensed under the Apache License, Version 2.0, as declared in their
-published Maven metadata:
-
-  AndroidX (Core, AppCompat, Activity, Fragment, Lifecycle, Navigation, Room,
-  WorkManager, DataStore, RecyclerView, ConstraintLayout and their dependencies)
-  Jetpack Compose (UI, Foundation, Material, Material 3, Material Icons)
-  Material Components for Android
-  Kotlin standard library and kotlinx.coroutines
-  Coil (image loading)               https://github.com/coil-kt/coil
-  MaxMind DB Reader (maxmind-db)     https://github.com/maxmind/MaxMind-DB-Reader-java
-
--------------------------------------------------------------------------------
-Data downloaded by the app at run time (not stored in this repository)
--------------------------------------------------------------------------------
-
-  StevenBlack Unified Hosts          https://github.com/StevenBlack/hosts
-  Licence: MIT
-
-Blocklists a user adds by link are downloaded from the addresses the user enters
-and remain under their own licences.
+3. Trademarks:
+The name "TacUNS" and its logo are trademarks of their respective owners. 
+Use of these names does not imply endorsement by the original authors.

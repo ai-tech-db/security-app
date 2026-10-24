@@ -66,6 +66,58 @@ class DnsInterceptor(
         return name
     }
 
+
+    private fun extractSni(packet: ByteArray, ipHeaderLen: Int): String? {
+        try {
+            val tcpHeaderLen = ((packet[ipHeaderLen + 12].toInt() and 0xF0) shr 4) * 4
+            val payloadStart = ipHeaderLen + tcpHeaderLen
+            if (packet.size <= payloadStart + 5) return null
+
+            if (packet[payloadStart].toInt() and 0xFF != 0x16) return null
+            if (packet[payloadStart + 5].toInt() and 0xFF != 0x01) return null
+
+            var pos = payloadStart + 5 + 4 + 2 + 32
+            val sessionIdLen = packet[pos].toInt() and 0xFF
+            pos += 1 + sessionIdLen
+
+            val cipherSuiteLen = ((packet[pos].toInt() and 0xFF) shl 8) or (packet[pos + 1].toInt() and 0xFF)
+            pos += 2 + cipherSuiteLen
+
+            val compressionLen = packet[pos].toInt() and 0xFF
+            pos += 1 + compressionLen
+
+            if (pos + 2 > packet.size) return null
+            val extensionsLen = ((packet[pos].toInt() and 0xFF) shl 8) or (packet[pos + 1].toInt() and 0xFF)
+            pos += 2
+            val extensionsEnd = pos + extensionsLen
+            if (extensionsEnd > packet.size) return null
+
+            while (pos + 4 <= extensionsEnd) {
+                val extType = ((packet[pos].toInt() and 0xFF) shl 8) or (packet[pos + 1].toInt() and 0xFF)
+                val extLen = ((packet[pos + 2].toInt() and 0xFF) shl 8) or (packet[pos + 3].toInt() and 0xFF)
+                pos += 4
+
+                if (extType == 0x0000) {
+                    if (pos + 2 > packet.size) return null
+                    pos += 2
+                    if (pos + 1 > packet.size) return null
+                    val nameType = packet[pos].toInt() and 0xFF
+                    pos += 1
+                    if (nameType == 0) {
+                        if (pos + 2 > packet.size) return null
+                        val nameLen = ((packet[pos].toInt() and 0xFF) shl 8) or (packet[pos + 1].toInt() and 0xFF)
+                        pos += 2
+                        if (pos + nameLen > packet.size) return null
+                        return String(packet, pos, nameLen, Charsets.US_ASCII)
+                    }
+                }
+                pos += extLen
+            }
+        } catch (e: Exception) {
+        }
+        return null
+    }
+
     fun start() {
         dnsForwarder = DnsForwarder(scope) { socket -> protectSocket(socket) }
 
@@ -116,6 +168,14 @@ class DnsInterceptor(
                 byteBuffer.clear()
                 byteBuffer.limit(length)
 
+                Log.d(TAG, "Packet: len=$length, ipv4=${PacketEngine.isIpv4(byteBuffer)}")
+                if (PacketEngine.isIpv4(byteBuffer)) {
+                    val proto = PacketEngine.getProtocol(byteBuffer)
+                    val ipHdr = PacketEngine.getIPHeaderLength(byteBuffer)
+                    val dstPort = if (ipHdr > 0) PacketEngine.getDestPort(byteBuffer, ipHdr) else -1
+                    Log.d(TAG, "Packet: proto=$proto, dstPort=$dstPort")
+                }
+
                 // Filter: IPv4 only
                 if (!PacketEngine.isIpv4(byteBuffer)) continue
 
@@ -133,12 +193,21 @@ class DnsInterceptor(
                         val tcpSrcPort = PacketEngine.getSourcePort(byteBuffer, ipHeaderLen)
                         val tcpDstIp   = PacketEngine.getDestIP(byteBuffer)
                         val tcpDstPort = PacketEngine.getDestPort(byteBuffer, ipHeaderLen)
+                        Log.d(TAG, "TCP: $tcpSrcIp:$tcpSrcPort -> $tcpDstIp:$tcpDstPort")
                         val tcpUid     = sessionManager.resolveUid(
                             PROTOCOL_TCP, tcpSrcIp, tcpSrcPort, tcpDstIp, tcpDstPort
                         )
                         // tcpUid < 0 → INVALID_UID (unknown) → RST to preserve current behaviour.
                         // tcpUid >= 0 → real app or System (uid=0) → only RST if actually blocked.
-                        val shouldRst = tcpUid < 0 || ruleEngine.isAppBlocked(tcpUid, isWifi())
+                        var shouldRst = tcpUid < 0 || ruleEngine.isAppBlocked(tcpUid, isWifi())
+                        if (!shouldRst) {
+                            val sni = extractSni(packetBuffer, ipHeaderLen)
+                            Log.d(TAG, "SNI extracted: $sni")
+                            if (sni != null && ruleEngine.isDomainBlocked(sni)) {
+                                shouldRst = true
+                                Log.d(TAG, "RST sent for SNI: $sni")
+                            }
+                        }
                         if (shouldRst) {
                             val snapshot = packetBuffer.copyOf(length)
                             scope.launch {
@@ -159,6 +228,7 @@ class DnsInterceptor(
 
                 // Log domain with app attribution before forwarding
                 val domain = extractDnsName(packetBuffer, ipHeaderLen + 8, length)
+                Log.d(TAG, "DNS query: $domain, blocked=${ruleEngine.isDomainBlocked(domain ?: "")}")
                 val srcPort = PacketEngine.getSourcePort(byteBuffer, ipHeaderLen)
                 val srcIP   = PacketEngine.getSourceIP(byteBuffer)
                 val uid     = sessionManager.resolveUid(PROTOCOL_UDP, srcIP, srcPort, "10.0.0.1", DNS_PORT)

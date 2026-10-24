@@ -14,7 +14,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.painterResource
+import com.tacu.nsfwzerotrust.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -22,10 +25,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sentinel.ui.theme.*
 import com.sentinel.ui.viewmodel.BlocklistViewModel
-import com.tacu.nsfwzerotrust.R
 
 @Composable
-private fun InfoSection(icon: ImageVector, title: String, body: String) {
+private fun InfoSection(icon: Painter, title: String, body: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -86,21 +88,21 @@ fun VpnNetworkPrivacyScreen(onBack: () -> Unit, viewModel: BlocklistViewModel = 
         ) {
             item {
                 InfoSection(
-                    icon = Icons.Default.VpnKey,
+                    icon = rememberVectorPainter(Icons.Default.VpnKey),
                     title = stringResource(R.string.vpn_conn_works_title),
                     body = stringResource(R.string.vpn_conn_works_body)
                 )
             }
             item {
                 InfoSection(
-                    icon = Icons.Default.Dns,
+                    icon = rememberVectorPainter(Icons.Default.Dns),
                     title = stringResource(R.string.vpn_data_leaves_title),
                     body = stringResource(R.string.vpn_data_leaves_body)
                 )
             }
             item {
                 InfoSection(
-                    icon = Icons.Default.Block,
+                    icon = painterResource(R.drawable.ic_block),
                     title = stringResource(R.string.vpn_blocked_never_title),
                     body = stringResource(R.string.vpn_blocked_never_body)
                 )

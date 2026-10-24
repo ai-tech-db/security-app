@@ -1,16 +1,18 @@
+# Gradle
 .gradle/
-local.properties
-app/build/
+.gradle_docker/
+.kotlin/
 build/
+app/build/
+local.properties
+
+# Android Studio / IntelliJ
 .idea/
 *.iml
-.env
+*.hprof
 
 # Build outputs
 app/release/
-*.code-workspace
-
-# Built/signed APKs & bundles and signing keys must never be committed.
 *.apk
 *.aab
 *.idsig
@@ -21,3 +23,4 @@ app/release/
 *.tmp
 __pycache__/
 *.pyc
+*.log

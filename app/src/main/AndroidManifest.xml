@@ -19,10 +19,6 @@
         android:localeConfig="@xml/locale_config"
         android:theme="@style/Theme.TacuNsFwZeroTrustSecurity">
 
-        <!-- AndroidX per-app language: persists the user's language choice across
-             process death / app restart, and applies it before SentinelActivity's
-             onCreate() runs so there is no flash of the wrong language on cold start.
-             Official mechanism — see developer.android.com/guide/topics/resources/app-languages -->
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
             android:enabled="false"
@@ -32,9 +28,13 @@
                 android:value="true" />
         </service>
 
+        <!-- MainActivity (estende FlutterActivity) come unico entry point -->
         <activity
-            android:name="com.sentinel.ui.SentinelActivity"
+            android:name="com.sentinel.ui.MainActivity"
             android:exported="true"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.TacuNsFwZeroTrustSecurity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,11 +42,26 @@
             </intent-filter>
         </activity>
 
+        <!-- FlutterActivity esplicita: necessaria perché MainActivity la avvia via startActivity() -->
+        <activity
+            android:name="io.flutter.embedding.android.FlutterActivity"
+            android:exported="false"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.TacuNsFwZeroTrustSecurity" />
+
+        <!-- SentinelActivity senza LAUNCHER (se vuoi tenerla per la UI nativa) -->
+        <activity
+            android:name="com.sentinel.ui.SentinelActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TacuNsFwZeroTrustSecurity" />
+
         <service
             android:name="com.sentinel.core.vpn.SentinelVpnService"
             android:enabled="true"
             android:exported="false"
-            android:process=":vpn"
+            
             android:foregroundServiceType="specialUse"
             android:permission="android.permission.BIND_VPN_SERVICE">
             <intent-filter>

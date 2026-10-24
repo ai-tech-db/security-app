@@ -185,6 +185,10 @@ class RuleEngine private constructor(context: Context) {
     private fun labelFor(matched: String, sched: Set<String>): String =
         if (sched.contains(matched)) LABEL_SCHEDULE else "USER BLOCK"
 
+    suspend fun getUserBlockedDomains(): List<String> {
+        return dao.getUserBlockedDomains().map { it.domain }
+    }
+
     suspend fun addBlockRule(domain: String, uid: Int, packageName: String, source: String = "USER") {
         dao.insertRule(FirewallRule(domain, uid, packageName, true, source))
         // Copy-on-write: build a new set, then publish it. Re-read inside the lock so

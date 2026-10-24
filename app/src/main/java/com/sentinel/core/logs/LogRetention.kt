@@ -14,13 +14,14 @@ object LogRetention {
     const val OFF      = 0
     const val HOURS_6  = 6
     const val HOURS_24 = 24
+    const val DAYS_3   = 72
     const val DAYS_7   = 24 * 7
     const val DAYS_30  = 24 * 30
 
     const val DEFAULT_HOURS = DAYS_7
 
     /** Offered in Settings, in this order. */
-    val CHOICES = listOf(OFF, HOURS_6, HOURS_24, DAYS_7, DAYS_30)
+    val CHOICES = listOf(OFF, HOURS_6, HOURS_24, DAYS_3, DAYS_7, DAYS_30)
 
     /**
      * A hard stop on row count regardless of the chosen window, so a very busy phone

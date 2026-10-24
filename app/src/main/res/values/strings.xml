@@ -5,7 +5,7 @@
          in app/src/main/java — none of these are displayed by the current UI. Marked
          translatable="false" so they don't require a Tamil translation; left in place
          (not deleted) since removing them is outside this change's scope. -->
-    <string name="app_name" translatable="false">TacU-NS Firewall</string>
+    <string name="app_name" translatable="false">Security APP</string>
     <string name="dashboard_title" translatable="false">Zero-Trust Firewall</string>
     <string name="dashboard_subtitle" translatable="false">Local-only Android firewall inspired by enterprise packet flow.</string>
     <string name="protection_status" translatable="false">Protection Status</string>
