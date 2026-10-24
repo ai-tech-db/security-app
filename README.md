@@ -7,9 +7,7 @@ Built with a powerful Kotlin core (VPN, DNS, Room) and a stunning Flutter UI, it
 
 ## 🎬 Preview
 
-https://github.com/user-attachments/assets/PLACEHOLDER
-
-(A full demo video is available in the assets/ folder)
+https://github.com/user-attachments/assets/22d55705-7e8d-4a34-aeff-7ce5b1577b79
 
 ## ✨ Features
 
