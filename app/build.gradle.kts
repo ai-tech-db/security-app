@@ -29,7 +29,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.tacu.nsfwzerotrust"
+        applicationId = "io.github.aitechdb.securityapp"
         minSdk = 29
         targetSdk = 36
         versionCode = 1
