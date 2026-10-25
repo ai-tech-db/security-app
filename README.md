@@ -125,7 +125,6 @@ The core firewall engine is based on the original TacUNS project, which was lice
 ## 📱 Follow Us & Full Video
 
 - **Full Video Tutorial (Facebook)**: [Watch the full demo on Facebook](https://fb.watch/v/4Tdu1ufpW/)
-- **GitHub Repository**: [Security APP](https://github.com/ai-tech-db/security-app)
 
 ---
 
