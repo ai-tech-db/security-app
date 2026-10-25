@@ -120,4 +120,13 @@ The Flutter-based user interface (Welcome Screen, Setup, Dashboard, Log, Setting
 What is derived (TacUNS)
 The core firewall engine is based on the original TacUNS project, which was licensed under the Apache License 2.0. The original Apache 2.0 code has been modified and integrated into this GPLv3 project. See the NOTICE file for full attribution details.
 
+
+
+## 📱 Follow Us & Full Video
+
+- **Full Video Tutorial (Facebook)**: [Watch the full demo on Facebook](https://fb.watch/v/4Tdu1ufpW/)
+- **GitHub Repository**: [Security APP](https://github.com/ai-tech-db/security-app)
+
+---
+
 Made with ❤️ by AI-Tech-DB
