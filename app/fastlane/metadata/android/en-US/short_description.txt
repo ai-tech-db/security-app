@@ -1,1 +1,0 @@
-Local VPN firewall. Blocks trackers, malware and lookalike domains.
