@@ -100,6 +100,10 @@ The app requests only the necessary permissions (BIND_VPN_SERVICE, FOREGROUND_SE
 ## 🧪 Testing & Verification
 Check VPN service logs: adb logcat -s DnsInterceptor:D *:S
 
+Note on testing the firewall: Browsers and operating systems cache DNS records and web pages aggressively. If you add a domain to the blacklist and it still loads, try using an Incognito/Private window or clear your browser and DNS cache. The firewall operates at the network level; if the browser uses a cached IP, it may bypass the initial DNS interception.
+
+Log retention: To view connection logs, you must enable a retention period (24 hours or 3 days) from the Settings screen. If set to OFF, logs are not displayed. To completely remove all stored logs, set the option to OFF and close the app.
+
 Verify VPN process: adb shell ps -A | grep tacu
 
 Check VPN permission: adb shell dumpsys package com.tacu.nsfwzerotrust | grep BIND_VPN_SERVICE
