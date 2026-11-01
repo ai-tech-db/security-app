@@ -5,14 +5,6 @@
 [![Flutter](https://img.shields.io/badge/Flutter-3.35.7-02569B?logo=flutter)](https://flutter.dev)
 [![Platform](https://img.shields.io/badge/Platform-Android-green.svg)](https://www.android.com)
 
-[![License: GPL-3.0](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.1.10-7F52FF?logo=kotlin)](https://kotlinlang.org)
-[![Flutter](https://img.shields.io/badge/Flutter-3.35.7-02569B?logo=flutter)](https://flutter.dev)
-[![Platform](https://img.shields.io/badge/Platform-Android-green.svg)](https://www.android.com)
-
-Security APP is a modern, privacy-focused local VPN firewall and security monitor for Android. 
-Unlike commercial VPNs, it does not route your data to a remote server. It creates a local VPN tunnel directly on your device to intercept and filter traffic, ensuring maximum privacy.
-
 Built with a powerful Kotlin core (VPN, DNS, Room) and a stunning Flutter UI, it protects your device against trackers, malicious domains, and suspicious apps.
 
 ## 🎬 Preview
