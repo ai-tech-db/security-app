@@ -4,6 +4,7 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.1.10-7F52FF?logo=kotlin)](https://kotlinlang.org)
 [![Flutter](https://img.shields.io/badge/Flutter-3.35.7-02569B?logo=flutter)](https://flutter.dev)
 [![Platform](https://img.shields.io/badge/Platform-Android-green.svg)](https://www.android.com)
+[![Sponsor](https://img.shields.io/badge/Sponsor-ai--tech--db-pink?logo=github-sponsors)](https://github.com/sponsors/ai-tech-db)
 
 Built with a powerful Kotlin core (VPN, DNS, Room) and a stunning Flutter UI, it protects your device against trackers, malicious domains, and suspicious apps.
 
